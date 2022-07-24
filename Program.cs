@@ -36,22 +36,36 @@ double CalcularImpostoDeRenda (double salario)
 double CalcularINSS(double salario)
 {
     double descINSS = 0;
-    if (salario <= 1830.29)
+    if (salario <= 1212.00)
     {
-        descINSS = ((salario * 8) / 100);
+        descINSS = ((salario * 7.5) / 100);
         return descINSS;
     }
-    if(salario >= 1830.30 && salario <= 3050.52)
+    if(salario >= 1212.01 && salario <= 2427.35)
     {
         descINSS = ((salario * 9) / 100);
         return descINSS;
     }
-    if(salario >= 3050.53 && salario <= 6101.06)
+    if(salario >= 2427.36 && salario <= 3641.03)
     {
-        descINSS = ((salario * 11) / 100);
+        descINSS = ((salario * 12) / 100);
+        return descINSS;
+    }
+    if (salario >= 3641.04 && salario <= 7087.22)
+    {
+        descINSS = ((salario * 12) / 100);
         return descINSS;
     }
     return descINSS;
+}
+
+//Método calculaDescontos tem como objetivo calcular todos os descontos a partir de um salário
+double CalculaDescontos(double salario)
+{
+    var salarioComDesconto = 0.0;
+
+    salarioComDesconto = Math.Round(CalcularImpostoDeRenda(salario) - CalcularINSS(salario), 2);
+    return salarioComDesconto;
 }
 
 Console.WriteLine("Valor do salário:");
@@ -60,4 +74,8 @@ var salario = Convert.ToDouble(Console.ReadLine());
 Console.WriteLine($"Salario com desconto do imposto de renda: {CalcularImpostoDeRenda(salario)}");
 Console.WriteLine($"Desconto INSS: {CalcularINSS(salario)}");
 //Exemplo de interpolação
+//Função Math.Round() -> Utilizada para formatação do valor
 Console.WriteLine($"Valor do salário com descontos: {Math.Round(CalcularImpostoDeRenda(salario) - CalcularINSS(salario),2)}");
+
+//Imprimindo a função CalculaDescontos
+Console.WriteLine($"Salario com os descontos: {CalculaDescontos(salario)}");
