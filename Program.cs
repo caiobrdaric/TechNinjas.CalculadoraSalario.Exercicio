@@ -1,25 +1,31 @@
 ﻿double CalculoINSS(double salario)
 {
-    double c_salario = salario;
-    double desconto = 0;
+    double faixa1 = 90.90;
+    double faixa2 = faixa1+109.38;
+    double faixa3 = faixa2 + 145.64;
+    double faixa4 = faixa3 + 482.46;
 
     if (salario <= 1212)
     {
-        desconto = c_salario - (c_salario * 0.925);
+        return salario - (salario * 0.925);
     }
     if (salario > 1212.01 && salario <= 2427.35)
     {
-        desconto = c_salario - (c_salario * 0.91);
+        return faixa1 + ((salario - 1212.01) * 0.09);
     }
     if (salario >= 2427.36 && salario <= 3641.03)
     {
-        desconto = c_salario - (c_salario * 0.88);
+        return faixa2 + ((salario - 2427.36) * 0.12);
     }
     if (salario >= 3641.04 && salario <= 7087.22)
     {
-        desconto = c_salario - (c_salario * 0.86);
+        return faixa3 + ((salario - 3641.04) * 0.14);
     }
-    return desconto;
+    if (salario > 7087.22)
+    {
+        return faixa4;
+    }
+    return 0;
 }
 double CalculoIR(double salario)
 {
@@ -52,30 +58,13 @@ double CalculoIR(double salario)
     return desconto;
 }
 
-//Método CalculaDescontos tem como objetivo calcular todos os descontos do salário
-double CalculaDescontos(double salario)
-{
-    //Criação da variável
-    var salarioComDescontos = 0.0;
-
-    salarioComDescontos = salario - CalculoIR(salario) - CalculoINSS(salario);
-    return Math.Round(salarioComDescontos, 2);
-}
-
 Console.WriteLine("Digite o salário");
 double salario = Convert.ToDouble(Console.ReadLine());
 
 var descontoINSS = CalculoINSS(salario);
 var descontoIR = CalculoIR(salario);
 double salarioliquido = salario - descontoIR - descontoINSS;
-<<<<<<< HEAD
 
-Console.WriteLine($"Desconto do IR: {descontoIR}");
-Console.WriteLine($"Desconto do INSS: {descontoINSS}");
-Console.WriteLine($"Seu salario é {salarioliquido}");
-=======
-Console.WriteLine($"Desconto do IR: {Math.Round(descontoIR,2)}");
-Console.WriteLine($"Desconto do INSS: {Math.Round(descontoINSS,2)}");
-Console.WriteLine($"Seu salario é {salarioliquido}");
-
-Console.WriteLine($"Salario líquido: {CalculaDescontos(salario)}");
+Console.WriteLine($"Desconto do IR: {Math.Round(descontoIR, 2)}");
+Console.WriteLine($"Desconto do INSS: {Math.Round(descontoINSS, 2)}");
+Console.WriteLine($"Seu salario é {Math.Round(salarioliquido),2 }");
