@@ -1,81 +1,81 @@
-﻿//Método para calcular imposto de renda
-double CalcularImpostoDeRenda (double salario)
+﻿double CalculoINSS(double salario)
 {
-    if(salario > 1903.99 && salario <= 2829.65)
-    {
-        double aliquota = 0.925;
-        salario = (salario * aliquota) + 142.80;
-        return salario;
-    }
-    if (salario >= 2826.65 && salario <= 3751.05)
-    {
-        double aliquota = 0.85;
-        salario = (salario * aliquota) + 354.80;
-        return salario;
-    }
+    double c_salario = salario;
+    double desconto = 0;
 
-    if (salario >= 3751.05 && salario <= 4664.68)
+    if (salario <= 1212)
     {
-        double aliquota = 0.775;
-        salario = (salario * aliquota) + 636.13;
-        return salario;
+        desconto = c_salario - (c_salario * 0.925);
     }
-
-    if (salario >= 4664.68)
+    if (salario > 1212.01 && salario <= 2427.35)
     {
-        double aliquota = 0.725;
-        salario = (salario * aliquota) + 869.36;
-        return salario;
+        desconto = c_salario - (c_salario * 0.91);
     }
-
-    return salario;
-
-}
-
-//Método para calcular INSS
-double CalcularINSS(double salario)
-{
-    double descINSS = 0;
-    if (salario <= 1212.00)
+    if (salario >= 2427.36 && salario <= 3641.03)
     {
-        descINSS = ((salario * 7.5) / 100);
-        return descINSS;
-    }
-    if(salario >= 1212.01 && salario <= 2427.35)
-    {
-        descINSS = ((salario * 9) / 100);
-        return descINSS;
-    }
-    if(salario >= 2427.36 && salario <= 3641.03)
-    {
-        descINSS = ((salario * 12) / 100);
-        return descINSS;
+        desconto = c_salario - (c_salario * 0.88);
     }
     if (salario >= 3641.04 && salario <= 7087.22)
     {
-        descINSS = ((salario * 12) / 100);
-        return descINSS;
+        desconto = c_salario - (c_salario * 0.86);
     }
-    return descINSS;
+    return desconto;
+}
+double CalculoIR(double salario)
+{
+    double c_salario = salario;
+    double desconto = 0;
+
+    if (c_salario <= 1903.98)
+    {
+    }
+    if (c_salario >= 1903.99 && c_salario <= 2826.65)
+    {
+        desconto = ((c_salario - (c_salario * 0.925)) - 142.80);
+
+    }
+    if (c_salario >= 2826.66 && c_salario <= 3751.05)
+    {
+        desconto = (c_salario - (c_salario * 0.85)) - 354.80;
+
+    }
+    if (c_salario >= 3751.06 && c_salario <= 4664.68)
+    {
+        desconto = (c_salario - (c_salario * 0.775)) - 636.13;
+
+    }
+    if (c_salario >= 4664.69)
+    {
+        desconto = (c_salario - (c_salario * 0.725)) - 869.36;
+
+    }
+    return desconto;
 }
 
-//Método calculaDescontos tem como objetivo calcular todos os descontos a partir de um salário
+//Método CalculaDescontos tem como objetivo calcular todos os descontos do salário
 double CalculaDescontos(double salario)
 {
-    var salarioComDesconto = 0.0;
+    //Criação da variável
+    var salarioComDescontos = 0.0;
 
-    salarioComDesconto = Math.Round(CalcularImpostoDeRenda(salario) - CalcularINSS(salario), 2);
-    return salarioComDesconto;
+    salarioComDescontos = salario - CalculoIR(salario) - CalculoINSS(salario);
+    return Math.Round(salarioComDescontos, 2);
 }
 
-Console.WriteLine("Valor do salário:");
-var salario = Convert.ToDouble(Console.ReadLine());
+Console.WriteLine("Digite o salário");
+double salario = Convert.ToDouble(Console.ReadLine());
 
-Console.WriteLine($"Salario com desconto do imposto de renda: {CalcularImpostoDeRenda(salario)}");
-Console.WriteLine($"Desconto INSS: {CalcularINSS(salario)}");
-//Exemplo de interpolação
-//Função Math.Round() -> Utilizada para formatação do valor
-Console.WriteLine($"Valor do salário com descontos: {Math.Round(CalcularImpostoDeRenda(salario) - CalcularINSS(salario),2)}");
+var descontoINSS = CalculoINSS(salario);
+var descontoIR = CalculoIR(salario);
+double salarioliquido = salario - descontoIR - descontoINSS;
+<<<<<<< HEAD
 
-//Imprimindo a função CalculaDescontos
-Console.WriteLine($"Salario com os descontos: {CalculaDescontos(salario)}");
+Console.WriteLine($"Desconto do IR: {descontoIR}");
+Console.WriteLine($"Desconto do INSS: {descontoINSS}");
+Console.WriteLine($"Seu salario é {salarioliquido}");
+=======
+Console.WriteLine($"Desconto do IR: {Math.Round(descontoIR,2)}");
+Console.WriteLine($"Desconto do INSS: {Math.Round(descontoINSS,2)}");
+Console.WriteLine($"Seu salario é {salarioliquido}");
+
+Console.WriteLine($"Salario líquido: {CalculaDescontos(salario)}");
