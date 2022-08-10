@@ -8,7 +8,7 @@ namespace TechNinjas.CalculadoraSalario.Exercicio.Model
 {
     public class Trabalhador
     {
-        public char nome { get; set; }
+        public string nome { get; set; }
         public double salarioBruto { get; set; }
         public double salarioLiquido { get; set; }
     }
